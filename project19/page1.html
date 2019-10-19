@@ -1,0 +1,127 @@
+<!DOCTYPE HTML>
+<html lang="ko">
+<head>
+	<meta charset="UTF-8">
+	<title>활동가의 공부, 언제나! 어디서나!</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+
+	<link rel="stylesheet" href="./css/style.css" />
+
+	<!--[if lt IE 9]>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
+	<![endif]-->
+	<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/2.7.6/idangerous.swiper.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/masonry/3.3.2/masonry.pkgd.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.2/js/bootstrap.min.js"></script>
+	<script src="./js/ui_script.js"></script>
+</head>
+<body>
+<div id="skipNavi">
+	<a href="#contents">본문 바로가기</a>
+</div>
+<div id="wrap">
+	<div data-html-include="inc_header.html" data-gnb-on="2"></div>
+	<div id="contents">
+		<div class="summary">
+			<div class="inner">&lt;국내NPO전문과정&gt;은 지난 18회차 기획아카이브에서 소개한 국내 대학/대학원에 개설된 NPO관련 전공의 학위 과정을 2019년 바뀐 정보를반영하여 다시 소개합니다. ‘#장학금’은 공익활동가 대상의 장학지원제도를 운영하고 있는 학교 표시입니다.</div>
+		</div>
+		<div class="inner">
+			<div class="tag_menu">
+				<strong>태그검색</strong>
+				<ul>
+					<li class="on"><a href="all">전체보기</a></li>
+					<li><a href="cate1">#장학금</a></li>
+					<li><a href="cate2">#석사과정</a></li>
+					<li><a href="cate3">#학부과정</a></li>
+					<li><a href="cate4">#수업료300만원미만</a></li>
+					<li><a href="cate5">#수업료400만원미만</a></li>
+					<li><a href="cate6">#수업료500만원미만</a></li>
+					<li><a href="cate7">#수업료500만원이상</a></li>
+				</ul>
+			</div>
+			<ul class="grid_list">
+				<li class="grid-sizer"></li>
+			</ul>
+		</div>
+	</div>
+	<div data-html-include="inc_footer.html"></div>
+</div>
+<script>
+$(function(){
+	$.ajax({
+		type: 'GET',
+		url: 'page1.json',
+		data: { get_param: 'value' },
+		dataType:'json',
+		success: function (data) {
+			var list = data,
+				listLen = list.length,
+				contentStr = '';
+			for(var i=0; i<listLen; i++){
+				contentStr += '<li class="grid-item">';
+				contentStr += '	<div class="box">';
+				contentStr += '		<ul class="list">';
+					if(list[i].item6 != '' && list[i].item6 != null){
+				var tags = list[i].item6.split(' ');
+				contentStr += '			<li class="tag_txt">';
+				for(var j in tags){
+				contentStr += '				<span>'+tags[j]+'</span>';
+				}
+				contentStr += '			</li>';
+				}
+				contentStr += '			<li>';
+				contentStr += '				<div class="dt">학교/전공</div>';
+				contentStr += '				<div class="dd tit"><strong>'+ list[i].item0+'</strong></div>';
+				contentStr += '			</li>';
+				contentStr += '			<li>';
+				contentStr += '				<div class="dt">이수기간</div>';
+				if(list[i].item1 != '' && list[i].item1 != null){
+				contentStr += '				<div class="dd">'+ list[i].item1+'</div>';
+				}else{
+				contentStr += '				<div class="dd">-</div>';
+				}
+				contentStr += '			</li>';
+				contentStr += '			<li>';
+				contentStr += '				<div class="dt">비용</div>';
+				if(list[i].item2 != '' && list[i].item2 != null){
+				contentStr += '				<div class="dd">'+ list[i].item2+'</div>';
+				}else{
+				contentStr += '				<div class="dd">-</div>';
+				}
+				contentStr += '			</li>';
+				contentStr += '			<li>';
+				contentStr += '				<div class="dt">자격요건</div>';
+				if(list[i].item3 != '' && list[i].item3 != null){
+				contentStr += '				<div class="dd">'+ list[i].item3+'</div>';
+				}else{
+				contentStr += '				<div class="dd">-</div>';
+				}
+				contentStr += '			</li>';
+				contentStr += '			<li>';
+				contentStr += '				<div class="dt">문의처</div>';
+				if(list[i].item4 != '' && list[i].item4 != null){
+				contentStr += '				<div class="dd">'+ list[i].item4+'</div>';
+				}else{
+				contentStr += '				<div class="dd">-</div>';
+				}
+				contentStr += '			</li>';
+				contentStr += '			<li class="btn-wrap clear">';
+				if(list[i].item5 != '' && list[i].item5 != null){
+				contentStr += '				<a href="'+ list[i].item5+'" target="_blank" class="btn btn-primary btn-sm">링크 <i class="fa fa-external-link" aria-hidden="true"></i></a>';
+				}
+				contentStr += '			</li>';
+				contentStr += '		</ul>';
+				contentStr += '	</div>';
+				contentStr += '</li>';
+			}
+
+			$('.grid_list').append(contentStr);
+			gridUI();
+		}
+	});
+});
+</script>
+</body>
+</html>

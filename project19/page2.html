@@ -1,0 +1,148 @@
+<!DOCTYPE HTML>
+<html lang="ko">
+<head>
+	<meta charset="UTF-8">
+	<title>활동가의 공부, 언제나! 어디서나!</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+	
+	<link rel="stylesheet" href="./css/style.css" />	
+	
+	<!--[if lt IE 9]>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
+	<![endif]-->
+	<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/2.7.6/idangerous.swiper.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/masonry/3.3.2/masonry.pkgd.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.2/js/bootstrap.min.js"></script>
+	<script src="./js/ui_script.js"></script>
+</head>
+<body>
+<div id="skipNavi">
+	<a href="#contents">본문 바로가기</a>
+</div>
+<div id="wrap">
+	<div data-html-include="inc_header.html" data-gnb-on="3"></div>	
+	<div id="contents">
+		<div class="summary">
+			<div class="inner">&lt;재직자 교육/학습 과정&gt;에서 소개하는 프로그램은 지난 18회차 기획아카이브에서 소개된 프로그램에서 2019년도 기준으로 변경된 정보를 반영하여 다시 소개합니다. 기관/단체에 따라 2019년 기준 정보를 제공하지 않은 곳은 2018년 정보를 기반으로 작성되었습니다.</div>
+		</div>
+		<div class="inner">
+			<div class="tag_menu">
+				<strong>태그검색</strong>
+				<ul>
+					<li class="on"><a href="all">전체보기</a></li>
+					<li><a href="cate1">#2018년기준</a></li>
+					<li><a href="cate2">#2019년기준</a></li>
+					<li><a href="cate3">#무료</a></li>
+					<li><a href="cate4">#조건부무료</a></li>
+				</ul>
+			</div>
+			<ul class="grid_list">
+				<li class="grid-sizer"></li>				
+			</ul>
+		</div>
+	</div>
+	<div data-html-include="inc_footer.html"></div>
+</div>
+<script>
+$(function(){	
+	$.ajax({ 
+		type: 'GET', 
+		url: 'page2.json', 
+		data: { get_param: 'value' }, 
+		dataType:'json',
+		success: function (data) { 
+			var list = data,
+				listLen = list.length,
+				contentStr = '';
+			for(var i=0; i<listLen; i++){
+				contentStr += '<li class="grid-item">';
+				contentStr += '	<div class="box">';
+				contentStr += '		<ul class="list">';
+				if(list[i].item8 != '' && list[i].item8 != null){
+				var tags = list[i].item8.split(' ');				
+				contentStr += '			<li class="tag_txt">';
+				for(var j in tags){
+				contentStr += '				<span>'+tags[j]+'</span>';
+				}
+				contentStr += '			</li>';
+				}
+				contentStr += '			<li>';
+				contentStr += '				<div class="dt">프로그램 명</div>';
+				contentStr += '				<div class="dd tit"><strong>'+ list[i].item1+'</strong></div>';
+				contentStr += '			</li>';
+				contentStr += '			<li>';
+				contentStr += '				<div class="dt">주최</div>';
+				if(list[i].item2 != '' && list[i].item2 != null){
+				contentStr += '				<div class="dd">'+ list[i].item2+'</div>';
+				}else{
+				contentStr += '				<div class="dd">-</div>';
+				}
+				contentStr += '			</li>';
+				contentStr += '			<li>';
+				contentStr += '				<div class="dt">(이수)기간</div>';
+				if(list[i].item3 != '' && list[i].item3 != null){
+				contentStr += '				<div class="dd">'+ list[i].item3+'</div>';
+				}else{
+				contentStr += '				<div class="dd">-</div>';
+				}
+				contentStr += '			</li>';
+				contentStr += '			<li>';
+				contentStr += '				<div class="dt">비용</div>';
+				if(list[i].item4 != '' && list[i].item4 != null){
+				contentStr += '				<div class="dd">'+ list[i].item4+'</div>';
+				}else{
+				contentStr += '				<div class="dd">-</div>';
+				}
+				contentStr += '			</li>';
+				contentStr += '			<li>';
+				contentStr += '				<div class="dt">자격요건</div>';
+				if(list[i].item5 != '' && list[i].item5 != null){
+				contentStr += '				<div class="dd">'+ list[i].item5+'</div>';
+				}else{
+				contentStr += '				<div class="dd">-</div>';
+				}
+				contentStr += '			</li>';
+				contentStr += '			<li class="btn-wrap">';
+				if(list[i].item7 != '' && list[i].item7 != null){
+				contentStr += '				<a href="'+ list[i].item7+'" target="_blank" class="btn btn-primary btn-sm">링크 <i class="fa fa-external-link" aria-hidden="true"></i></a>';
+				}
+				contentStr += '				<a href="#" class="ui-btn open" title="상세 더보기"><span class="blind">상세</span> <i class="fa fa-angle-down" aria-hidden="true"></i></a>';
+				contentStr += '			</li>';
+				contentStr += '		</ul>';
+				contentStr += '	</div>';
+				contentStr += '	<div class="box expend">';
+				contentStr += '		<ul class="list">';
+								
+				if(list[i].item6 != '' && list[i].item6 != null){
+				contentStr += '			<li>';
+				contentStr += '				<div class="dt">프로그램 내용</div>';
+				contentStr += '				<div class="dd">'+ list[i].item6+'</div>';
+				contentStr += '			</li>';
+				}
+				if(list[i].item0 != '' && list[i].item0 != null){
+				contentStr += '			<li>';
+				contentStr += '				<div class="dt">비고</div>';
+				contentStr += '				<div class="dd">'+ list[i].item0+'</div>';
+				contentStr += '			</li>';
+				}
+				contentStr += '			<li class="btn-wrap">';
+				if(list[i].item7 != '' && list[i].item7 != null){
+				contentStr += '				<a href="'+ list[i].item7+'" target="_blank" class="btn btn-primary btn-sm">링크 <i class="fa fa-external-link" aria-hidden="true"></i></a>';
+				}
+				contentStr += '				<a href="#" class="ui-btn" title="닫기"><span class="blind">닫기</span> <i class="fa fa-times" aria-hidden="true"></i></a>';
+				contentStr += '			</li>';
+				contentStr += '		</ul>';
+				contentStr += '	</div>';
+				contentStr += '</li>';
+			}
+
+			$('.grid_list').append(contentStr);
+			gridUI();
+		}
+	});
+});
+</script>
+</body>
+</html>
